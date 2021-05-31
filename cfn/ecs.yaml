@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: ecs cluster and container registry deployment
+
+Resources:
+  MiddlewareCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: Middleware-Cluster
+      CapacityProviders:
+        - FARGATE
+      DefaultCapacityProviderStrategy:
+        - CapacityProvider: FARGATE
+          Weight: 1
+
+  OrderECR:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: order
+
+  FulfillmentECR:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: fulfillment
+
+Outputs:
+  MiddlewareClusterName:
+    Description: Name of the ECS cluster
+    Value: !Ref MiddlewareCluster
+    Export:
+      Name: !Sub ${AWS::StackName}-MiddlewareClusterName

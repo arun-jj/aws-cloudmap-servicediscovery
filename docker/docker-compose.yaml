@@ -1,0 +1,19 @@
+version: '3'
+services:
+  order:
+    build:
+      context: ../containers
+      dockerfile: order/Dockerfile
+    container_name: order
+    image: order
+    ports:
+      - "80"
+
+  fulfillment:
+    build:
+      context: ../containers
+      dockerfile: fulfillment/Dockerfile
+    container_name: fulfillment
+    image: fulfillment
+    ports:
+      - "80"
